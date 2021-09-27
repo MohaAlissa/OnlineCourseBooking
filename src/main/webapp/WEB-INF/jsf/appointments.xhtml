@@ -1,0 +1,246 @@
+<!-- @author Saeed, Ullah, Alissa, Zahra-->
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html">
+<h:head>
+    <meta charset="UTF-8"/>
+    <title>APT - Appointments</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" integrity="sha512-8bHTC73gkZ7rZ7vpqUQThUDhqcNFyYi2xgDgPDHc+GXVGHXq+xPjynxIopALmOPqzo9JZj0k6OqqewdGO3EsrQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js" integrity="sha512-dqw6X88iGgZlTsONxZK9ePmJEFrmHwpuMrsUChjAw1mRUhUITE5QU9pkcSox+ynfLhL15Sv2al5A0LVyDCmtUw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</h:head>
+<h:body>
+    <div class="ui inverted huge top fixed menu">
+        <div class="ui container">
+            <a href="/" class="header item">
+                APT
+            </a>
+            <a href="/appointments" class="item">Appointments</a>
+            <div class="right menu">
+                <a href="/account" class="item">
+                    <i class="user icon"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <br/>
+    <br/>
+    <div class="ui container">
+        <br/>
+        <h1 class="ui header">
+            Appointments
+            <div class="sub header">Manage your appointments</div>
+        </h1>
+        <a href="/">Home > </a>
+        <br/>
+        <br/>
+        <b>Not Confirmed = Lecturer needs to confirm the appointment</b>
+        <br/>
+        <b>Confirmed = Lecturer confirmed the appointment</b>
+        <br/>
+        <b>Cancelled = Student or lecturer cancelled the appointment</b> <br/>
+        <br/>
+        <a href="/create-appointment" class="ui green button" style="display: none" id="createNewButton"> <i class="plus icon"></i> Create New</a>
+        <table class="ui celled table">
+            <thead>
+            <tr>
+                <th>With who?</th>
+                <th>Day</th>
+                <th>Starts At</th>
+                <th>Ends At</th>
+                <th>Status</th>
+                <th></th>
+            </tr></thead>
+            <tbody id="appointmentTable">
+
+            </tbody>
+        </table>
+    </div>
+
+    <div class="ui modal">
+        <i class="close icon"></i>
+        <div class="header">
+            Appointment Info
+        </div>
+        <div class="content">
+            <form class="ui form">
+                <div class="field">
+                    <label>Created By</label>
+                    <p id="createdBy"></p>
+                </div>
+                <div class="field">
+                    <label>Lecturer</label>
+                    <p id="lecturer"></p>
+                </div>
+                <div class="field">
+                    <label>Participants</label>
+                    <p id="participants"></p>
+                </div>
+                <div class="field">
+                    <label>Starts At</label>
+                    <p id="startsAt"></p>
+                </div>
+                <div class="field">
+                    <label>EndsAt</label>
+                    <p id="endsAt"></p>
+                </div>
+                <div class="field">
+                    <label>Status</label>
+                    <p id="status"></p>
+                </div>
+                <div class="field">
+                    <label>Cancellation Reason</label>
+                    <p id="cancellationReason"></p>
+                </div>
+            </form>
+        </div>
+        <div class="actions">
+            <div class="ui red button" onclick="cancel()" id="cancelButton">
+                Cancel Appointment
+            </div>
+            <div class="ui black deny button">
+                Close
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let appointments;
+        let currentUser;
+        let currentAppointment;
+
+        window.onload = async () => {
+            currentUser = await getCurrentUser();
+            appointments = await fetchAppointments();
+            console.log(appointments);
+            if(currentUser.role === "STUDENT") {
+                renderStudentTable(appointments);
+                document.getElementById("createNewButton").style.display = "";
+            }
+            if(currentUser.role === "LECTURER") {
+                renderLecturerTable(appointments);
+            }
+        }
+
+        const getCurrentUser = async () => {
+            const res = await fetch("/current-user");
+            if(res.ok) {
+                return await res.json();
+            }
+        }
+
+        const fetchAppointments = async () => {
+            let res;
+            if(currentUser.role === "STUDENT") {
+                res = await fetch("/api/appointments/student/" + currentUser.email);
+            } else {
+                res = await fetch("/api/appointments/lecturer/" + currentUser.email);
+            }
+            return await res.json();
+        }
+
+        const confirm = async appointmentID => {
+            const res = await fetch("/api/appointments/confirm/" + appointmentID, {
+                method: "PATCH"
+            });
+            if(res.ok) {
+                document.location.reload();
+            }
+        }
+
+        const cancel = async () => {
+            let reason = prompt("Please enter cancellation reason");
+            let cancelledBy = currentUser.firstName + " " + currentUser.lastName;
+
+            if(reason) {
+                const res = await fetch("/api/appointments/cancel/" + currentAppointment.id, {
+                    method: "PATCH",
+                    headers: {
+                        "Accept": "application/json",
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({reason, cancelledBy})
+                });
+
+                if(res.ok) {
+                    document.location.reload();
+                }
+            } else {
+                alert("Cancellation reason is required");
+            }
+        }
+
+        const renderStudentTable = (appointments) => {
+            appointments.forEach((a) => {
+                document.getElementById("appointmentTable").innerHTML += `&lt;tr>
+            &lt;td data-label="">` + a.lecturer  + `&lt;/td>
+            &lt;td data-label="startsAt">` + new Date(a.startsAt).toLocaleDateString("de-DE") + `&lt;/td>
+            &lt;td data-label="startsAt">` + new Date(a.startsAt).toLocaleTimeString() + `&lt;/td>
+            &lt;td data-label="endsAt">` + new Date(a.endsAt).toLocaleTimeString() + `&lt;/td>
+            &lt;td data-label="Status">` + (a.cancelled === true ? "Cancelled" : a.confirmed === true ? "Confirmed" : "Not Confirmed") + `&lt;/td>
+            &lt;td data-label="Delete">
+                &lt;button class="ui secondary button" onclick="openModal(` + a.id + `)">
+                    &lt;i class="eye icon">&lt;/i> Read More
+                &lt;/button>
+            &lt;/td>
+        &lt;/tr>`
+            })
+
+        }
+
+        const renderLecturerTable = (appointments) => {
+            appointments.forEach((a) => {
+                document.getElementById("appointmentTable").innerHTML += `&lt;tr>
+            &lt;td data-label="">` + a.student  + `&lt;/td>
+            &lt;td data-label="startsAt">` + new Date(a.startsAt).toLocaleDateString("de-DE") + `&lt;/td>
+            &lt;td data-label="startsAt">` + new Date(a.startsAt).toLocaleTimeString() + `&lt;/td>
+            &lt;td data-label="endsAt">` + new Date(a.endsAt).toLocaleTimeString() + `&lt;/td>
+            &lt;td data-label="Status">` + renderStatus(a) + `&lt;/td>
+            &lt;td data-label="Delete">
+                &lt;button class="ui secondary button" onclick="openModal(` + a.id + `)">
+                    &lt;i class="eye icon">&lt;/i> Read More
+                &lt;/button>
+            &lt;/td>
+        &lt;/tr>`
+            })
+
+        }
+
+        const renderStatus = appointment => {
+            if(appointment.cancelled === true) {
+                return "Cancelled";
+            }
+            if(appointment.confirmed === true) {
+                return "Confirmed";
+            }
+            if(appointment.confirmed === false) {
+                return `&lt;button class="ui blue button" onclick="confirm(` + appointment.id + `)">
+                   Confirm
+                &lt;/button>`
+            }
+        }
+
+        const openModal = appointmentID => {
+            const appointment = appointments.find(a => a.id === appointmentID);
+
+            document.getElementById("createdBy").innerHTML = appointment.student;
+            document.getElementById("lecturer").innerHTML = appointment.lecturer;
+            document.getElementById("participants").innerHTML = appointment.participants.join("; ")
+            document.getElementById("startsAt").innerHTML = new Date(appointment.startsAt).toString();
+            document.getElementById("endsAt").innerHTML = new Date(appointment.endsAt).toString();
+            document.getElementById("status").innerHTML = appointment.cancelled === true ? "Cancelled" : appointment.confirmed === true ? "Confirmed" : "Not Confirmed";
+            document.getElementById("cancellationReason").innerHTML = appointment.cancelled === true ? appointment.cancellationReason : "";
+
+            if(appointment.cancelled === true) {
+                document.getElementById("cancelButton").style.display = "none";
+            } else {
+                document.getElementById("cancelButton").style.display = "";
+            }
+
+            currentAppointment = appointment;
+
+            $(".ui.modal").modal('show');
+        }
+    </script>
+</h:body>
+</html>

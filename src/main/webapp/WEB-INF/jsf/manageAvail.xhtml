@@ -1,0 +1,235 @@
+<!-- @author Saeed, Ullah, Alissa, Zahra-->
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html">
+<h:head>
+    <meta charset="UTF-8"/>
+    <title>Manage Availability</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"
+          integrity="sha512-8bHTC73gkZ7rZ7vpqUQThUDhqcNFyYi2xgDgPDHc+GXVGHXq+xPjynxIopALmOPqzo9JZj0k6OqqewdGO3EsrQ=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+            integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"
+            integrity="sha512-dqw6X88iGgZlTsONxZK9ePmJEFrmHwpuMrsUChjAw1mRUhUITE5QU9pkcSox+ynfLhL15Sv2al5A0LVyDCmtUw=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</h:head>
+<h:body>
+    <div class="ui inverted huge top fixed menu">
+        <div class="ui container">
+            <a href="/" class="header item">
+                APT
+            </a>
+            <a href="/appointments" class="item">Appointments</a>
+            <div class="right menu">
+                <a href="/account" class="item">
+                    <i class="user icon"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="ui container">
+        <br/>
+        <br/>
+        <br/>
+        <h1 class="ui header">
+            Manage Availability
+            <div class="sub header">Create and update the times students can book an appointment with you</div>
+        </h1>
+        <a href="/">Home > </a>
+        <br/>
+        <br/>
+        <button class="ui green button" onclick="openModal()"> <i class="plus icon"></i> Create new</button>
+        <h2 class="ui dividing header">Current Availabilities</h2>
+        <table class="ui celled table">
+            <thead>
+            <tr><th>Weekday</th>
+                <th>Starts At</th>
+                <th>Ends At</th>
+                <th>Delete</th>
+            </tr></thead>
+            <tbody id="availsTable">
+
+            </tbody>
+        </table>
+
+    </div>
+
+    <div class="ui modal">
+        <i class="close icon"></i>
+        <div class="header">
+            Create new availability
+        </div>
+        <div class="content">
+            <div class="description">
+                <div class="ui form">
+                    <div class="grouped fields" id="radios">
+                        <label>What day of the week?</label>
+                        <div class="field">
+                            <div class="ui radio checkbox">
+                                <input type="radio" name="example2" value="1" id="monday"/>
+                                <label>Monday</label>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui radio checkbox">
+                                <input type="radio" name="example2" value="2" id="tuesday"/>
+                                <label>Tuesday</label>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui radio checkbox">
+                                <input type="radio" name="example2" value="3" id="wednesday"/>
+                                <label>Wednesday</label>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui radio checkbox">
+                                <input type="radio" name="example2" value="4" id="thursday"/>
+                                <label>Thursday</label>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui radio checkbox">
+                                <input type="radio" name="example2" value="5" id="friday"/>
+                                <label>Friday</label>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui radio checkbox">
+                                <input type="radio" name="example2" value="6" id="saturday"/>
+                                <label>Saturday</label>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui radio checkbox">
+                                <input type="radio" name="example2" value="0" id="sunday"/>
+                                <label>Sunday</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>When should it start?</label>
+                        <input type="time" id="startsAt"/>
+                    </div>
+                    <div class="field">
+                        <label>When should it end?</label>
+                        <input type="time" id="endsAt"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="actions">
+            <div class="ui black deny button">
+                Cancel
+            </div>
+            <div class="ui positive right labeled icon button" onclick="create()">
+                Continue
+                <i class="checkmark icon"></i>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+
+        $('.ui.basic.modal')
+            .modal('show')
+        ;
+
+        let user;
+        let avails;
+
+        window.onload = async function() {
+            const loadedUser = await getCurrentUser();
+            avails = await getAvails(loadedUser.email);
+            user = loadedUser;
+            renderAvails(avails);
+        }
+
+        const renderAvails = (avails) => {
+            avails.forEach((a) => {
+                document.getElementById("availsTable").innerHTML += `&lt;tr>
+            &lt;td data-label="">` + a.weekday  + `&lt;/td>
+            &lt;td data-label="Age">` + a.startsAt + `&lt;/td>
+            &lt;td data-label="Job">` + a.endsAt + `&lt;/td>
+            &lt;td data-label="Delete">
+                &lt;button class="ui red button" onclick="del(` + a.id + `)">
+                    &lt;i class="trash icon">&lt;/i> Delete
+                &lt;/button>
+            &lt;/td>
+        &lt;/tr>`
+            })
+
+        }
+
+        const getCurrentUser = async () => {
+            const res = await fetch("/current-user");
+            if(res.ok) {
+                return await res.json();
+            }
+        }
+
+        const getAvails = async (email) => {
+            const res = await fetch('/availabilities/' + email);
+            if(res.ok) {
+                return await res.json();
+            }
+        }
+
+        const openModal = () => {
+            $('.ui.modal')
+                .modal('show')
+            ;
+        }
+
+        const create = async () => {
+            const weekday = displayRadioValue();
+            const startsAt = document.getElementById("startsAt").value
+            const endsAt = document.getElementById("endsAt").value;
+            try {
+                const res = await fetch("/availabilities", {
+                    method: "POST",
+                    body: JSON.stringify({
+                        lecturer: user.email,
+                        weekday,
+                        startsAt,
+                        endsAt
+                    }),
+                    headers: {
+                        "Accept": "application/json",
+                        "Content-Type": "application/json"
+                    }
+                });
+                if(res.ok) {
+                    document.location.reload();
+                }
+            } catch(e) {
+                alert(e.toString());
+            }
+        }
+
+        const displayRadioValue = () => {
+            let ele = document.getElementsByName('example2');
+
+            for(let i = 0; i &lt; ele.length; i++) {
+                if(ele[i].checked)
+                    return ele[i].value;
+            }
+        }
+
+        const update = (id) => {
+            const avail = avails.find(av => av.id === id);
+        }
+
+        const del = async (id) => {
+            const res = await fetch("/availabilities/" + id, {
+                method: "DELETE"
+            });
+            if(res.ok) {
+                document.location.reload();
+            }
+        }
+    </script>
+</h:body>
+</html>

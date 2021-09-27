@@ -1,0 +1,274 @@
+<!-- @author Saeed, Ullah, Alissa, Zahra-->
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html">
+<h:head>
+    <meta charset="UTF-8"/>
+    <title>APT - Create Appoinment</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"
+          integrity="sha512-8bHTC73gkZ7rZ7vpqUQThUDhqcNFyYi2xgDgPDHc+GXVGHXq+xPjynxIopALmOPqzo9JZj0k6OqqewdGO3EsrQ=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+            integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"
+            integrity="sha512-dqw6X88iGgZlTsONxZK9ePmJEFrmHwpuMrsUChjAw1mRUhUITE5QU9pkcSox+ynfLhL15Sv2al5A0LVyDCmtUw=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" integrity="sha512-aOG0c6nPNzGk+5zjwyJaoRUgCdOrfSDhmMID2u4+OIslr0GjpLKo7Xm0Ao3xmpM4T8AmIouRkqwj1nrdVsLKEQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</h:head>
+<h:body>
+    <div class="ui inverted huge top fixed menu">
+        <div class="ui container">
+            <a href="/" class="header item">
+                APT
+            </a>
+            <a href="/appointments" class="item">Appointments</a>
+            <div class="right menu">
+                <a href="/account" class="item">
+                    <i class="user icon"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="ui container">
+        <br/>
+        <br/>
+        <br/>
+        <h1>Create A New Appointment</h1>
+        <a href="/">Home > </a>
+        <h4 class="ui dividing header">Lecturers</h4>
+        <form class="ui form">
+            <div class="grouped fields" id="radioField">
+            </div>
+            <div class="field">
+                <h4 class="ui dividing header">Select date and time</h4>
+                <div class="ui grid">
+                    <div class="ui eight wide column">
+                        <input type="text" id="datepicker" placeholder="Select Date..." />
+                    </div>
+                    <div class="ui eight wide column">
+                        <div class="grouped fields" id="timesRadio"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="field">
+                <h4 class="ui dividing header">Select participants</h4>
+                <select class="ui fluid search dropdown" multiple="" id="userDropdown">
+                </select>
+            </div>
+            <div class="field">
+                <h4 class="ui dividing header">Description</h4>
+                <textarea rows="5" class="ui fluid input" placeholder="Write your description" id="description" />
+            </div>
+        </form>
+        <br/>
+        <button class="ui fluid green button" onclick="book()">Book Appointment</button>
+    </div>
+    <script>
+        let lecturers;
+        let avails;
+        // Weekdays in number [0,1,2]
+        let weekdays;
+        let availsForLecturer;
+        let selectedLecturer;
+        let allStudents;
+        let currentUser;
+
+        window.onload = async function () {
+            lecturers = await fetchLecturer();
+            avails = await fetchAvailability();
+            allStudents = await fetchStudents();
+            currentUser = await getCurrentUser();
+
+            mapLecturerToRadio(lecturers);
+            mapUserToDropdown(allStudents);
+
+
+            $('.ui.dropdown').dropdown();
+        }
+
+        const indexToDay = (weekday) => {
+            switch(weekday) {
+                case 0:
+                    return "SUNDAY";
+                case 1:
+                    return "MONDAY";
+                case 2:
+                    return "TUESDAY";
+                case 3:
+                    return "WEDNESDAY";
+                case 4:
+                    return "THURSDAY";
+                case 5:
+                    return "FRIDAY";
+                case 6:
+                    return "SATURDAY";
+            }
+        }
+
+        const dateSelected = d => {
+            const i = $( "#datepicker" ).datepicker( "getDate" ).getDay();
+            const day = indexToDay(i);
+            const byDate = availsForLecturer.filter(a => a.weekday === day);
+            mapTimesToRadio(byDate);
+        }
+
+        const isAvailable = (d) => {
+            if(weekdays.includes(d.getDay())) {
+                return [true, "av", "Available"];
+            }
+            return [false, "notav", 'Not Available'];
+        }
+
+        const fetchLecturer = async () => {
+            const res = await fetch("/lecturers");
+            return await res.json();
+        }
+
+        const fetchAvailability = async () => {
+            const res = await fetch("/availabilities");
+            return await res.json();
+        }
+
+        const fetchStudents = async () => {
+            const res = await fetch("/students");
+            return await res.json();
+        }
+
+        const getCurrentUser = async () => {
+            const res = await fetch("/current-user");
+            if(res.ok) {
+                return await res.json();
+            }
+        }
+
+        const filterByLecturer = (lecturer) => {
+            return avails.filter(a => a.lecturer === lecturer);
+        }
+
+        const lecturerSelected = () => {
+            const email = getRadioValue("lecturers");
+
+            availsForLecturer = avails.filter(a => a.lecturer === email);
+
+            weekdays = availsForLecturer.map(a => getIndexOfWeekday(a.weekday));
+
+            $( "#datepicker" ).datepicker({
+                minDate: 0,
+                beforeShowDay: isAvailable,
+                onSelect: dateSelected
+            });
+        }
+
+        const getIndexOfWeekday = wd => {
+            switch(wd) {
+                case "SUNDAY":
+                    return 0;
+                case "MONDAY":
+                    return 1;
+                case "TUESDAY":
+                    return 2;
+                case "WEDNESDAY":
+                    return 3;
+                case "THURSDAY":
+                    return 4;
+                case "FRIDAY":
+                    return 5;
+                case "SATURDAY":
+                    return 6;
+            }
+        }
+
+        const mapLecturerToRadio = (lecturers) => {
+            lecturers.forEach((l) => {
+                document.getElementById("radioField").innerHTML += `&lt;div class="field">
+                    &lt;div class="ui radio checkbox">
+                      &lt;input type="radio" name="lecturers" value="` + l.email + `" onclick="lecturerSelected()">
+                      &lt;label>` + l.firstName + " " + l.lastName + `&lt;/label>
+                    &lt;/div>
+                  &lt;/div>`
+            });
+        }
+
+        const mapTimesToRadio = (avails) => {
+            document.getElementById("timesRadio").innerHTML  = "";
+            avails.forEach((a) => {
+                document.getElementById("timesRadio").innerHTML += `&lt;div class="field">
+                    &lt;div class="ui radio checkbox">
+                      &lt;input type="radio" name="timesRadio" value="`+ a.id +`">
+                      &lt;label>` + a.startsAt + " - " + a.endsAt + `&lt;/label>
+                    &lt;/div>
+                  &lt;/div>`
+            });
+        }
+
+        const mapUserToDropdown = users => {
+            document.getElementById("userDropdown").innerHTML = '&lt;option value="">Select students&lt;/option>';
+            users.forEach((u) => {
+                if(currentUser.email !== u.email) {
+                    document.getElementById("userDropdown").innerHTML += '&lt;option value="'+ u.email + '">'+ u.firstName + " " + u.lastName +'&lt;/option>'
+                }
+            });
+        }
+
+        const book = async () => {
+            let lecturer = getRadioValue("lecturers");
+            let student = currentUser.email;
+            let participants = $('.ui.dropdown').dropdown("get value");
+            const selectedDate = $('#datepicker').datepicker('getDate');
+            const selectedAvail = getAvailById(getRadioValue("timesRadio"));
+            const startsAt = composeDate(selectedDate, selectedAvail.startsAt);
+            const endsAt = composeDate(selectedDate, selectedAvail.endsAt);
+            const description = document.getElementById("description").value;
+
+            try {
+                const res = await fetch("/appointments", {
+                    method: "POST",
+                    body: JSON.stringify({
+                        lecturer,
+                        student,
+                        participants,
+                        startsAt,
+                        endsAt,
+                        description: description ? description : "No Description"
+                    }),
+                    headers: {
+                        "Accept": "application/json",
+                        "Content-Type": "application/json"
+                    }
+                });
+
+                if(res.ok) {
+                    window.location.href = "/appointments";
+                }
+            } catch(e) {
+                console.error(e);
+            }
+        }
+
+        // Composes Date from selected date and available time
+        const composeDate = (date, avail) => {
+            const year = date.getFullYear();
+            const month = date.getMonth();
+            const day = date.getDate();
+            const hour = avail.split(":")[0];
+            const minute = avail.split(":")[1];
+            return new Date(year, month, day, hour, minute);
+        }
+
+        const getRadioValue = elementID => {
+            let ele = document.getElementsByName(elementID);
+
+            for(let i = 0; i &lt; ele.length; i++) {
+                if(ele[i].checked)
+                    return ele[i].value;
+            }
+        }
+
+        const getAvailById = id => {
+            return availsForLecturer.find(a => a.id === parseInt(id));
+        }
+
+    </script>
+</h:body>
+</html>

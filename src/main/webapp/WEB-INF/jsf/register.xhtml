@@ -1,0 +1,95 @@
+<!-- @author Saeed, Ullah, Alissa, Zahra-->
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+    <meta charset="UTF-8"/>
+    <title>Register</title>
+<!--    <link href="/static/css/main.css" rel="stylesheet" />-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" integrity="sha512-8bHTC73gkZ7rZ7vpqUQThUDhqcNFyYi2xgDgPDHc+GXVGHXq+xPjynxIopALmOPqzo9JZj0k6OqqewdGO3EsrQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js" integrity="sha512-dqw6X88iGgZlTsONxZK9ePmJEFrmHwpuMrsUChjAw1mRUhUITE5QU9pkcSox+ynfLhL15Sv2al5A0LVyDCmtUw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</h:head>
+<h:body>
+    <br/>
+    <br/>
+    <div class="ui container">
+        <h1 class="ui center aligned header">Register</h1>
+        
+        <div class="ui form">
+            <div class="ui field">
+                <label>Firstname</label>
+                <input type="text" id="firstname"/>
+            </div>
+            <div class="ui field">
+                <label>Lastname</label>
+                <input type="text" id="lastname"/>
+            </div>
+            <div class="ui field">
+                <label>Email</label>
+                <input type="text" id="email"/>
+            </div>
+            <div class="ui field">
+                <label>Password</label>
+                <input type="password" id="password"/>
+            </div>
+            <div class="ui field">
+                <label>Repeat Password</label>
+                <input type="password" id="repeatPassword"/>
+            </div>
+        </div>
+        <br/>
+        <button class="ui green button" onclick="submit()">Submit</button>
+        <br/>
+        <br/>
+        Already have an account? <a href="/login">Login</a>
+    </div>
+    <script>
+        function submit() {
+            const firstName = document.getElementById("firstname").value;
+            const lastName = document.getElementById("lastname").value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            const repeatPassword = document.getElementById("repeatPassword").value;
+
+            if(!firstName || !lastName) {
+                alert("Firstname and lastname have to defined");
+                return;
+            }
+
+            if(password !== repeatPassword) {
+                alert("Passwords do not match")
+                return;
+            }
+
+            if(!emailIsValid(email)) {
+                alert("Email is not valid");
+                return;
+            }
+
+            fetch("/register",
+                {
+                   method: 'POST',
+                   body: JSON.stringify({ email, firstName, lastName, password, role: "STUDENT" }),
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    }
+                }).then((res) => {
+                    if(res.ok) {
+                        window.location.href = "/success-registration";
+                    }
+                    if(res.status === 409) {
+                        alert(`User with the email exists already, please login`);
+                    }
+            }).catch((e) => {
+                alert("Error: " + e.toString());
+            });
+        }
+
+        function emailIsValid(email) {
+            const re = new RegExp('^[^\s@]+@[^\s@]+\.[^\s@]+$');
+            return re.test(email);
+        }
+    </script>
+</h:body>
+</html>

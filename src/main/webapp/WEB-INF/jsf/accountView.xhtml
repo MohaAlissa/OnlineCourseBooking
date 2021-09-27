@@ -1,0 +1,57 @@
+<!-- @author Saeed, Ullah, Alissa, Zahra-->
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html">
+<h:head>
+    <meta charset="UTF-8"/>
+    <title>Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" integrity="sha512-8bHTC73gkZ7rZ7vpqUQThUDhqcNFyYi2xgDgPDHc+GXVGHXq+xPjynxIopALmOPqzo9JZj0k6OqqewdGO3EsrQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js" integrity="sha512-dqw6X88iGgZlTsONxZK9ePmJEFrmHwpuMrsUChjAw1mRUhUITE5QU9pkcSox+ynfLhL15Sv2al5A0LVyDCmtUw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</h:head>
+<h:body>
+    <div class="ui inverted huge top fixed menu">
+        <div class="ui container">
+            <a href="/" class="header item">
+                APT
+            </a>
+            <a href="/appointments" class="item">Appointments</a>
+            <div class="right menu">
+                <a href="/account" class="item">
+                    <i class="user icon"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <br/>
+    <br/>
+    <div class="ui container" id="container">
+        <br/>
+        <h2 class="ui dividing header">My Account</h2>
+        <form id="accountData" class="ui form"></form>
+        <br/>
+        <br/>
+
+        <a class="ui primary button" href="/logout">Logout</a>
+    </div>
+    <script>
+        let user;
+
+        window.onload = async function() {
+            const loadedUser = await getCurrentUser();
+            user = loadedUser;
+            document.getElementById("accountData").innerHTML += `&lt;h4 class="ui header">Firstname: ` + loadedUser.firstName + `&lt;/h4>`
+            document.getElementById("accountData").innerHTML += `&lt;h4 class="ui header">Lastname: ` + loadedUser.lastName + `&lt;/h4>`
+            document.getElementById("accountData").innerHTML += `&lt;h4 class="ui header">Email: ` + loadedUser.email + `&lt;/h4>`
+        }
+
+        const getCurrentUser = async () => {
+            const res = await fetch("/current-user");
+            if(res.ok) {
+                return await res.json();
+            }
+        }
+
+    </script>
+</h:body>
+</html>

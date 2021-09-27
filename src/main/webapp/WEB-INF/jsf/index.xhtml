@@ -1,0 +1,98 @@
+<!-- @author Saeed, Ullah, Alissa, Zahra-->
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <h:head>
+        <meta charset="UTF-8"/>
+        <title>Home</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" integrity="sha512-8bHTC73gkZ7rZ7vpqUQThUDhqcNFyYi2xgDgPDHc+GXVGHXq+xPjynxIopALmOPqzo9JZj0k6OqqewdGO3EsrQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js" integrity="sha512-dqw6X88iGgZlTsONxZK9ePmJEFrmHwpuMrsUChjAw1mRUhUITE5QU9pkcSox+ynfLhL15Sv2al5A0LVyDCmtUw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    </h:head>
+    <h:body>
+        <div class="ui inverted huge top fixed menu">
+            <div class="ui container">
+                <a href="/" class="header item">
+                    APT
+                </a>
+                <a href="/appointments" class="item">Appointments</a>
+                <div class="right menu">
+                    <a href="/account" class="item">
+                        <i class="user icon"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <div class="ui container">
+            <h2 class="ui center aligned header" id="firstHeader">Hi, Welcome To Your Appointment System</h2>
+            <div class="ui placeholder segment">
+                <div class="ui two column stackable center aligned grid">
+                    <div class="ui vertical divider">Or</div>
+                    <div class="middle aligned row">
+                        <div class="column">
+                            <div class="ui icon header">
+                                <i class="search icon"></i>
+                                 Look Over Your Appointments
+                            </div>
+                            <div class="field">
+                                <a class="ui secondary button" href="/appointments">
+                                    Click Here
+                                </a>
+                            </div>
+                        </div>
+                        <div class="column" id="roleAction">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            let user;
+
+            window.onload = async function() {
+                const loadedUser = await getCurrentUser();
+                user = loadedUser;
+                document.getElementById("firstHeader").innerHTML = 'Hi ' + loadedUser.firstName +  ', Welcome To Your Appointment System';
+                if(loadedUser.role === "STUDENT") {
+                    renderForStudent();
+                } else {
+                    renderForLecturer();
+                }
+            }
+
+            const getCurrentUser = async () => {
+                const res = await fetch("/current-user");
+                if(res.ok) {
+                    return await res.json();
+                }
+            }
+
+            const renderForLecturer = () => {
+                document.getElementById("roleAction").innerHTML = `&lt;div class="ui icon header">
+                                &lt;i class="clock outline icon">&lt;/i>
+                                Manage Availability
+                            &lt;/div>
+                            &lt;a class="ui blue button" href="/manage-availability">
+                                Click Here
+                            &lt;/a>`
+            }
+
+            const renderForStudent = () => {
+                document.getElementById("roleAction").innerHTML = `&lt;div class="ui icon header">
+                                &lt;i class="clock outline icon">&lt;/i>
+                                Book A New Appointment
+                            &lt;/div>
+                            &lt;a class="ui blue button" href="/create-appointment">
+                                Click Here
+                            &lt;/a>`
+            }
+
+        </script>
+    </h:body>
+</html>
