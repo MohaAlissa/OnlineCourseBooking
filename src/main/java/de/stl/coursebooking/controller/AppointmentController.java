@@ -1,16 +1,21 @@
 package de.stl.coursebooking.controller;
 
+import java.io.IOException;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import de.stl.coursebooking.dto.AppointmentDto;
 import de.stl.coursebooking.dto.CancelAppointmentDto;
 import de.stl.coursebooking.model.Appointment;
-import de.stl.coursebooking.service.EmailService;
 import de.stl.coursebooking.service.IAppointmentService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-
-import java.io.IOException;
-import java.util.List;
 /*
  * @author Alissa, Zahra
  *

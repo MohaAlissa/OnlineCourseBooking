@@ -1,14 +1,15 @@
 package de.stl.coursebooking.controller;
 
-import de.stl.coursebooking.dto.UserRegistrationDto;
-import de.stl.coursebooking.model.User;
-import de.stl.coursebooking.repository.UserRepository;
-import de.stl.coursebooking.service.IUserService;
-import de.stl.coursebooking.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import de.stl.coursebooking.dto.UserRegistrationDto;
+import de.stl.coursebooking.service.IUserService;
 /*
  * @author Alissa, Zahra
  *

@@ -1,6 +1,6 @@
 package de.stl.coursebooking.model;
 /*
- * @author Saeed, Ullah
+ * @author Ajini, Alghazi
  *
  */
 import de.stl.coursebooking.enums.Weekday;

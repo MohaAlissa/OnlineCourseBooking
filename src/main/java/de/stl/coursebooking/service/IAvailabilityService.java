@@ -5,7 +5,7 @@ import de.stl.coursebooking.model.Availability;
 
 import java.util.List;
 /*
- * @author Saeed, Ullah, Alissa
+ * @author Al_Mahamed
  *
  */
 public interface IAvailabilityService {

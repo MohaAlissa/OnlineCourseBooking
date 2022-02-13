@@ -1,17 +1,17 @@
 package de.stl.coursebooking.service;
 
-import de.stl.coursebooking.dto.AppointmentDto;
-import de.stl.coursebooking.model.Appointment;
-import de.stl.coursebooking.repository.AppointmentRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.stereotype.Service;
-
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import de.stl.coursebooking.dto.AppointmentDto;
+import de.stl.coursebooking.model.Appointment;
+import de.stl.coursebooking.repository.AppointmentRepository;
 /*
- * @author Saeed, Ullah, Alissa
+ * @author Ajini, Alghazi, Al_Mahamed
  *
  */
 @Service

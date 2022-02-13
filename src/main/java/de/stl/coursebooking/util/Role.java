@@ -1,6 +1,6 @@
 package de.stl.coursebooking.util;
 /*
- * @author Zahra
+ * @author Al_Mahamed
  *
  */
 public class Role {

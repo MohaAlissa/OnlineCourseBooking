@@ -5,7 +5,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.sql.Timestamp;
 /*
- * @author Saeed, Ullah
+ * @author Ajini, Alghazi
  *
  */
 @Entity

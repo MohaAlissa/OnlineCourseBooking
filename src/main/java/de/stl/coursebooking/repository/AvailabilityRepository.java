@@ -1,16 +1,17 @@
 package de.stl.coursebooking.repository;
 
-import de.stl.coursebooking.enums.Weekday;
-import de.stl.coursebooking.model.Availability;
-import de.stl.coursebooking.model.User;
+import java.util.List;
+
+import javax.transaction.Transactional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
-import javax.transaction.Transactional;
-import java.util.List;
+import de.stl.coursebooking.enums.Weekday;
+import de.stl.coursebooking.model.Availability;
 /*
- * @author Saeed, Ullah
+ * @author Ajini, Alghazi
  *
  */
 public interface AvailabilityRepository extends JpaRepository<Availability, Long> {

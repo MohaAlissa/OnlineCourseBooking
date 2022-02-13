@@ -1,13 +1,13 @@
 package de.stl.coursebooking.repository;
 
-import de.stl.coursebooking.dto.UserRegistrationDto;
-import de.stl.coursebooking.model.User;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import java.util.List;
+import de.stl.coursebooking.model.User;
 /*
- * @author Saeed, Ullah
+ * @author Ajini, Alghazi
  *
  */
 public interface UserRepository extends JpaRepository<User, Long> {

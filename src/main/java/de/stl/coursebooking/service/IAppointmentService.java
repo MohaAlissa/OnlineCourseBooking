@@ -6,7 +6,7 @@ import de.stl.coursebooking.model.Appointment;
 import java.io.IOException;
 import java.util.List;
 /*
- * @author Saeed, Ullah, Alissa
+ * @author Al_Mahamed
  *
  */
 public interface IAppointmentService {

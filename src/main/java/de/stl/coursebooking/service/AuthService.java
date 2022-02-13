@@ -1,15 +1,11 @@
 package de.stl.coursebooking.service;
 
-import org.springframework.web.context.annotation.RequestScope;
-import org.springframework.web.context.annotation.SessionScope;
+import java.io.Serializable;
 
 import javax.annotation.ManagedBean;
-import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
 import javax.faces.view.ViewScoped;
-import java.io.Serializable;
 /*
- * @author Saeed, Ullah, Alissa
+ * @author Ajini, Alghazi, Al_Mahamed
  *
  */
 @ManagedBean

@@ -1,6 +1,6 @@
 package de.stl.coursebooking.model;
 /*
- * @author Saeed, Ullah
+ * @author Ajini, Alghazi
  *
  */
 import org.hibernate.annotations.CreationTimestamp;

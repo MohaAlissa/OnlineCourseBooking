@@ -1,16 +1,22 @@
 package de.stl.coursebooking.service;
 
-import com.sendgrid.*;
-import de.stl.coursebooking.model.Appointment;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.io.IOException;
+
+import com.sendgrid.Content;
+import com.sendgrid.Email;
+import com.sendgrid.Mail;
+import com.sendgrid.Method;
+import com.sendgrid.Personalization;
+import com.sendgrid.Request;
+import com.sendgrid.Response;
+import com.sendgrid.SendGrid;
+
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-import java.util.*;
+import de.stl.coursebooking.model.Appointment;
 /*
- * @author Saeed, Ullah, Alissa
+ * @author Ajini, Alghazi, Al_Mahamed
  *
  */
 @Service

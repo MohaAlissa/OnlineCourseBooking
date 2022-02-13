@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
 /*
- * @author Saeed, Ullah, Alissa
+ * @author Al_Mahamed
  *
  */
 public interface IUserService extends UserDetailsService {
