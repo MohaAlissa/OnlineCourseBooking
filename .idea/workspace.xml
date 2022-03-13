@@ -5,50 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d7b8d796-209e-4460-9134-422758fcc5a9" name="Changes" comment="Add Project to git.">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/stl/coursebooking/ServletInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/stl/coursebooking/ServletInitializer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/stl/coursebooking/config/SecurityConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/stl/coursebooking/config/SecurityConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/stl/coursebooking/controller/AppointmentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/stl/coursebooking/controller/AppointmentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/stl/coursebooking/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/stl/coursebooking/controller/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/stl/coursebooking/controller/HomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/stl/coursebooking/controller/HomeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/stl/coursebooking/dto/AvailabilityDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/stl/coursebooking/dto/AvailabilityDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/stl/coursebooking/model/Appointment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/stl/coursebooking/model/Appointment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/stl/coursebooking/model/Availability.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/stl/coursebooking/model/Availability.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/stl/coursebooking/model/CustomUserDetails.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/stl/coursebooking/model/CustomUserDetails.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/stl/coursebooking/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/stl/coursebooking/model/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/stl/coursebooking/repository/AppointmentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/stl/coursebooking/repository/AppointmentRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/stl/coursebooking/repository/AvailabilityRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/stl/coursebooking/repository/AvailabilityRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/stl/coursebooking/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/stl/coursebooking/repository/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/stl/coursebooking/service/AppointmentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/stl/coursebooking/service/AppointmentService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/stl/coursebooking/service/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/stl/coursebooking/service/AuthService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/stl/coursebooking/service/AvailabilityService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/stl/coursebooking/service/AvailabilityService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/stl/coursebooking/service/EmailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/stl/coursebooking/service/EmailService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/stl/coursebooking/service/IAppointmentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/stl/coursebooking/service/IAppointmentService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/stl/coursebooking/service/IAvailabilityService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/stl/coursebooking/service/IAvailabilityService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/stl/coursebooking/service/IUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/stl/coursebooking/service/IUserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/stl/coursebooking/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/stl/coursebooking/service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/stl/coursebooking/util/Role.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/stl/coursebooking/util/Role.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/stl/coursebooking/util/Util.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/stl/coursebooking/util/Util.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsf/accountView.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsf/accountView.xhtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsf/appointments.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsf/appointments.xhtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsf/createAppointment.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsf/createAppointment.xhtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsf/error.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsf/error.xhtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsf/index.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsf/index.xhtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsf/login.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsf/login.xhtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsf/manageAvail.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsf/manageAvail.xhtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsf/register.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsf/register.xhtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsf/successfulRegistration.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsf/successfulRegistration.xhtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/de/stl/coursebooking/config/SecurityConfiguration.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/de/stl/coursebooking/config/SecurityConfiguration.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/de/stl/coursebooking/controller/AppointmentController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/de/stl/coursebooking/controller/AppointmentController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/de/stl/coursebooking/controller/AuthController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/de/stl/coursebooking/controller/AuthController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/de/stl/coursebooking/controller/HomeController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/de/stl/coursebooking/controller/HomeController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/de/stl/coursebooking/dto/AvailabilityDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/de/stl/coursebooking/dto/AvailabilityDto.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/de/stl/coursebooking/repository/AvailabilityRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/de/stl/coursebooking/repository/AvailabilityRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/de/stl/coursebooking/service/AuthService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/de/stl/coursebooking/service/AuthService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/de/stl/coursebooking/service/EmailService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/de/stl/coursebooking/service/EmailService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/de/stl/coursebooking/service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/de/stl/coursebooking/service/UserService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,6 +28,7 @@
         <entry key="JPA Inspector" value="true" />
         <entry key="JPA Palette" value="true" />
         <entry key="JPA Structure" value="true" />
+        <entry key="com.haulmont.jpb.jpaStructure" value="true" />
       </map>
     </option>
     <option name="myId2Visible">
@@ -77,6 +36,7 @@
         <entry key="JPA Inspector" value="false" />
         <entry key="JPA Palette" value="false" />
         <entry key="JPA Structure" value="false" />
+        <entry key="com.haulmont.jpb.jpaStructure" value="true" />
       </map>
     </option>
   </component>
